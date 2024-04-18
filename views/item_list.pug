@@ -1,0 +1,12 @@
+extends layout
+
+block title
+  ="All items"
+block content
+  h1 All items
+  ul
+    each item in items
+      li
+        a(href=item.url) 
+          h2= item.name
+        p= item.description

@@ -1,16 +1,18 @@
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import createError from "http-errors";
 import express from "express";
-import path from "node:path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
-import { fileURLToPath } from "node:url";
+import mongoose from "mongoose";
 
-import { default as indexRouter } from "./routes/index.js";
-import { default as usersRouter } from "./routes/users.js";
+import indexRouter from "./routes/index.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
+
+await mongoose.connect(process.env.MONGODB_URI);
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -22,8 +24,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use(indexRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -31,6 +32,7 @@ app.use(function (req, res, next) {
 });
 
 // error handler
+// eslint-disable-next-line no-unused-vars
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;

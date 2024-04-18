@@ -1,0 +1,17 @@
+extends layout
+
+block title
+  ="Category: " + category.name
+block content
+  h1= "Category: " + category.name
+  p= category.description
+  if items.length 
+    h2 Items:
+    ul
+      each item in items
+        li
+          a(href=item.url) 
+            h2= item.name
+          p= item.description
+  else
+    p There are no items of this category

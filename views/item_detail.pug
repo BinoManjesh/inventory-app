@@ -1,0 +1,12 @@
+extends layout
+
+block title
+  ="Item: " + item.name
+block content
+  h1 Item: #{item.name}
+  p #[strong Category:] #{item.category.name}
+  p= item.description
+  p #[strong Price:] ₹ #{item.price} 
+  p #[strong Category:] #{item.number_in_stock}
+
+

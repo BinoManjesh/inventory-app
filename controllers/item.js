@@ -8,7 +8,10 @@ export async function list(req, res) {
   res.render("item_list", { items });
 }
 
-export async function detail() {}
+export async function detail(req, res) {
+  const item = await Item.findById(req.params.id).populate("category");
+  res.render("item_detail", { item });
+}
 export async function update_get() {}
 export async function update_post() {}
 export async function delete_get() {}

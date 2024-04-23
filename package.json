@@ -4,13 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node --env-file=.env ./bin/www",
+    "start": "NODE_ENV=production node --env-file=.env ./bin/www",
     "dev": "DEBUG=inventory-app:* nodemon --env-file=.env ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",
     "debug": "^4.3.4",
     "express": "^4.19.2",
+    "express-validator": "^7.0.1",
     "http-errors": "^2.0.0",
     "mongoose": "^8.3.2",
     "morgan": "^1.10.0",

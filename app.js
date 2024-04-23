@@ -12,7 +12,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 
-await mongoose.connect(process.env.MONGODB_URI);
+mongoose
+  .connect(process.env.MONGODB_URI)
+  .then(() => console.log("Connected to database"));
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
@@ -35,7 +37,8 @@ app.use(function (req, res, next) {
 // eslint-disable-next-line no-unused-vars
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
-  res.locals.message = err.message;
+  res.locals.message =
+    req.app.get("env") === "development" ? err.message : "Something went wrong";
   res.locals.error = req.app.get("env") === "development" ? err : {};
 
   // render the error page

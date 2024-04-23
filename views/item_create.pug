@@ -1,0 +1,32 @@
+extends layout 
+
+block title
+  = "Add new item"
+
+block content 
+  form(method="post")
+    label(for="name") Name
+    input(type="text", id="name", name="name" value=item && item.name)
+
+    label(for="description") Description
+    input(type="text", id="description", name="description" value=item && item.description)
+
+    label(for="category") Category
+    select(name="category" id="category")
+      each category of categories
+        option(value=category.id)= category.name
+
+    label(for="price") Price
+    input(type="number", id="price", name="price", min=0, value=item && item.price)
+
+    label(for="number_in_stock") Number in stock
+    input(type="number", id="number_in_stock", name="number_in_stock", min=0, value=item && item.number_in_stock)
+
+    button Submit
+  if errors
+    div.errors
+      ul
+        each error of errors
+          li= error.msg
+
+

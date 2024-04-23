@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Category, Item } from "./models/index.js";
+import { Category, Item } from "../models/index.js";
 
 main().catch((err) => console.log(err));
 

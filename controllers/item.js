@@ -62,7 +62,24 @@ export const detail = asyncHandler(async function (req, res) {
   const item = await Item.findById(req.params.id).populate("category");
   res.render("item_detail", { item });
 });
+
 export async function update_get() {}
 export async function update_post() {}
-export async function delete_get() {}
-export async function delete_post() {}
+
+export const delete_get = asyncHandler(async (req, res) => {
+  const item = await Item.findById(req.params.id).populate("category");
+  res.render("item_delete", { item });
+});
+
+export const delete_post = asyncHandler(async (req, res) => {
+  const item = await Item.findById(req.params.id).exec();
+  if (
+    item.hoursSinceCreate <= 12 ||
+    req.body.password === process.env.SECRET_PASSWORD
+  ) {
+    await Item.findByIdAndDelete(req.params.id);
+    res.redirect("/items");
+  } else {
+    res.render("item_delete", { item, error: true });
+  }
+});

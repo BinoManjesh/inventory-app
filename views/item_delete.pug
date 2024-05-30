@@ -1,0 +1,18 @@
+extends layout
+
+block title
+  ="Delete Item: " + item.name
+block content
+  h1 Delete Item: #{item.name}
+  p #[strong Category:] #{item.category.name}
+  p= item.description
+  p #[strong Price:] ₹ #{item.price} 
+  p #[strong Category:] #{item.number_in_stock}
+  form(method="post")
+    if item.hoursSinceCreate >= 12
+      p Since this item has been created more than 12 hours before, enter the secret password to delete it.
+      label(for="password") Enter Secret Password
+      input(id="password" name="password" type="password")
+    button Confirm delete
+  if error
+    p Wrong password!

@@ -8,5 +8,4 @@ block content
   p= item.description
   p #[strong Price:] ₹ #{item.price} 
   p #[strong Category:] #{item.number_in_stock}
-
-
+  a(href=`${item.url}/delete`) Delete item

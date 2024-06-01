@@ -1,7 +1,7 @@
 extends layout 
 
 block title
-  = "Add new item"
+  = title
 
 block content 
   form(method="post")
@@ -14,13 +14,18 @@ block content
     label(for="category") Category
     select(name="category" id="category")
       each category of categories
-        option(value=category.id)= category.name
+        option(value=category.id, selected=item && (item.category.toString() === category.id))= category.name
 
     label(for="price") Price
     input(type="number", id="price", name="price", min=0, value=item && item.price)
 
     label(for="number_in_stock") Number in stock
     input(type="number", id="number_in_stock", name="number_in_stock", min=0, value=item && item.number_in_stock)
+
+    if item && item.hoursSinceCreate && item.hoursSinceCreate >= 12
+      p Since this item has been created more than 12 hours before, enter the secret password to update it.
+      label(for="password") Enter Secret Password
+      input(id="password" name="password" type="password")
 
     button Submit
   if errors

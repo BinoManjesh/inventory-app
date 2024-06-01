@@ -4,6 +4,7 @@ block title
   ="Item: " + item.name
 block content
   h1 Item: #{item.name}
+  a(href=`${item.url}/update`) Update item
   p #[strong Category:] #{item.category.name}
   p= item.description
   p #[strong Price:] ₹ #{item.price} 

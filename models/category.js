@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import getHoursSince from "../utils/getHoursSince.js";
 
 const CategorySchema = new Schema(
   {
@@ -10,6 +11,10 @@ const CategorySchema = new Schema(
 
 CategorySchema.virtual("url").get(function () {
   return `/categories/${this._id}`;
+});
+
+CategorySchema.virtual("hoursSinceCreate").get(function () {
+  return getHoursSince(this.createdAt);
 });
 
 export default model("Category", CategorySchema);

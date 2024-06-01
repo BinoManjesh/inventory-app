@@ -50,5 +50,25 @@ export const detail = asyncHandler(async function (req, res) {
 
 export async function update_get() {}
 export async function update_post() {}
-export async function delete_get() {}
-export async function delete_post() {}
+
+export const delete_get = asyncHandler(async (req, res) => {
+  const [category, items] = await Promise.all([
+    Category.findById(req.params.id).exec(),
+    Item.find({ category: req.params.id }).exec(),
+  ]);
+  res.render("category_delete", { category, items });
+});
+
+export const delete_post = asyncHandler(async (req, res) => {
+  const category = await Category.findById(req.params.id).exec();
+  if (
+    category.hoursSinceCreate <= 12 ||
+    req.body.password === process.env.SECRET_PASSWORD
+  ) {
+    await Category.findByIdAndDelete(req.params.id);
+    res.redirect("/categories");
+  } else {
+    const items = await Item.find({ category: req.params.id }).exec();
+    res.render("category_delete", { category, items, error: true });
+  }
+});

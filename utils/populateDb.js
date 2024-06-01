@@ -8,6 +8,7 @@ const categories = {};
 async function main() {
   await mongoose.connect(process.env.MONGODB_URI);
   console.log("Connected");
+  await Category.deleteMany({}).exec();
   await createCategories();
   await createItems();
   console.log("Created everything");

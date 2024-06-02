@@ -1,7 +1,7 @@
 extends layout 
 
 block title
-  = "Create new category"
+  = title 
 
 block content 
   form(method="post")
@@ -9,6 +9,12 @@ block content
     input(type="text", id="name", name="name" value=category && category.name)
     label(for="description") Description
     input(type="text", id="description", name="description" value=category && category.description)
+
+    if category && category.hoursSinceCreate && category.hoursSinceCreate >= 12
+      p Since this category has been created more than 12 hours before, enter the secret password to update it.
+      label(for="password") Enter Secret Password
+      input(id="password" name="password" type="password")
+
     button Submit
   if errors
     div.errors

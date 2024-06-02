@@ -87,14 +87,20 @@ export const update_get = asyncHandler(async (req, res) => {
 });
 
 export const update_post = [
+  asyncHandler(async (req, res, next) => {
+    req.body.item = await Item.findById(req.params.id);
+    next();
+  }),
   ...getFormValidator(),
-  body("password", "Wrong password").custom((value) => {
-    console.log(`${value} <> ${process.env.SECRET_PASSWORD}`);
-    return value === process.env.SECRET_PASSWORD;
+  body("password", "Wrong password").custom((value, { req }) => {
+    return (
+      req.body.item.hoursSinceCreate <= 12 ||
+      value === process.env.SECRET_PASSWORD
+    );
   }),
 
   asyncHandler(async (req, res) => {
-    const item = await Item.findById(req.params.id);
+    const item = req.body.item;
     item.set({
       name: req.body.name,
       description: req.body.description,

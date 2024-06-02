@@ -4,6 +4,7 @@ block title
   ="Category: " + category.name
 block content
   h1= "Category: " + category.name
+  a(href=`${category.url}/update`) Update category
   p= category.description
   if items.length 
     h2 Items:

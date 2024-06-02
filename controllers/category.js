@@ -4,22 +4,29 @@ import { body, validationResult } from "express-validator";
 import { toHeadingCase } from "../utils/sanitizers.js";
 
 export function create_get(req, res) {
-  res.render("category_create");
+  res.render("category_form", { title: "Create new category" });
+}
+
+function getFormValidator() {
+  return [
+    body("name", "Name field is required")
+      .trim()
+      .notEmpty()
+      .bail()
+      .customSanitizer(toHeadingCase),
+    body("description").optional().trim(),
+  ];
 }
 
 export const create_post = [
-  body("name", "Name field is required")
-    .trim()
-    .notEmpty()
-    .bail()
-    .customSanitizer(toHeadingCase)
-    .custom(async (value) => {
-      const exists = await Category.exists({ name: value }).exec();
-      if (exists) {
-        throw new Error("Category already exists");
-      }
-    }),
-  body("description").optional().trim(),
+  ...getFormValidator(),
+  body("name").custom(async (value) => {
+    const exists = await Category.exists({ name: value }).exec();
+    if (exists) {
+      throw new Error("Category already exists");
+    }
+  }),
+
   asyncHandler(async function (req, res) {
     const results = validationResult(req);
     const category = new Category({
@@ -27,7 +34,11 @@ export const create_post = [
       description: req.body.description,
     });
     if (!results.isEmpty()) {
-      res.render("category_create", { errors: results.array(), category });
+      res.render("category_form", {
+        title: "Create new category",
+        errors: results.array(),
+        category,
+      });
       return;
     }
     await category.save();
@@ -48,8 +59,37 @@ export const detail = asyncHandler(async function (req, res) {
   res.render("category_detail", { category, items });
 });
 
-export async function update_get() {}
-export async function update_post() {}
+export const update_get = asyncHandler(async (req, res) => {
+  const category = await Category.findById(req.params.id).exec();
+  res.render("category_form", {
+    title: `Update Category ${category.name}`,
+    category,
+  });
+});
+
+export const update_post = [
+  ...getFormValidator(),
+
+  asyncHandler(async (req, res) => {
+    const category = await Category.findById(req.params.id);
+    category.set({
+      name: req.body.name,
+      description: req.body.description,
+      category: req.body.category,
+    });
+    const results = validationResult(req);
+    if (!results.isEmpty()) {
+      res.render("category_form", {
+        title: `Update Category ${category.name}`,
+        category,
+        errors: results.array(),
+      });
+      return;
+    }
+    await category.save();
+    res.redirect(category.url);
+  }),
+];
 
 export const delete_get = asyncHandler(async (req, res) => {
   const [category, items] = await Promise.all([

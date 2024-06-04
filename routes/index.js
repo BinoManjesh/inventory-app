@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { itemController, categoryController } from "../controllers/index.js";
+import { Item, Category } from "../models/index.js";
+import asyncHandler from "../utils/asyncHandler.js";
 
 function getRouter({
   create_get,
@@ -34,10 +36,16 @@ router.get("/", function (req, res) {
   res.redirect("/home");
 });
 
-router.get("/home", function (req, res) {
-  res.render("index");
-});
-
+router.get(
+  "/home",
+  asyncHandler(async (req, res) => {
+    const [n_items, n_categories] = await Promise.all([
+      Item.countDocuments({}).exec(),
+      Category.countDocuments({}).exec(),
+    ]);
+    res.render("index", { n_items, n_categories });
+  })
+);
 router.use("/categories", getRouter(categoryController));
 router.use("/items", getRouter(itemController));
 

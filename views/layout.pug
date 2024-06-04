@@ -6,21 +6,19 @@ html(lang="en")
     title
       block title
     link(rel='stylesheet', href='/stylesheets/style.css')
-    link(rel="icon" href="/images/logo.jpg")
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📦</text></svg>">
 
-  body
-    header
-      a(href="/home") 
-        img(src="/images/logo.jpg", alt="Website logo")
-    nav
-      ul
-        li
-          a(href="/categories") All categories 
-        li
-          a(href="/items") All Items
-        li
-          a(href="/categories/new") Create new category
-        li
-          a(href="/items/new") Create new item
-    div#content
-      block content
+  body.-screen.bg-gray-300
+    header.col-span-2.bg-gray-500.flex.justify-center.sticky.top-0
+      .grow.max-w-7xl.flex.flex-row.justify-between.items-center
+        a(href="/home")
+          h1.text-7xl 📦 The Inventory
+        nav.flex.flex-row.gap-6
+          div.flex.flex-col.p-6
+            a.text-3xl(href="/items") Items
+            a.text-2xl.text-gray-800(href="/items/new") New item
+          div.flex.flex-col.p-6.text-xl
+            a.text-3xl(href="/categories") Categories
+            a.text-2xl.text-gray-800(href="/categories/new") New Category
+
+    block content

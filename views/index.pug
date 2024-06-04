@@ -4,7 +4,21 @@ block title
   ="Inventory"
 
 block content
-  p.
-    Welcome to the Inventory. Create and view both items and categories. You can
-    also update or delete items and categories for upto 12 hours after their
-    creation. Unless you know the secret password.
+  div.flex.justify-center
+    div.shadow.rounded-lg.m-12.p-6.max-w-lg.bg-brown-900.text-2xl.text-black.bg-gray-400
+      h2.font-medium Welcome to The Inventory
+      br
+      p 
+        span.text-4xl.text.font-medium #{n_items} 
+        .
+          items
+      p
+        span.text-4xl.text.font-medium #{n_categories} 
+        .
+          categories
+      br
+      p Create and view both items and categories.
+      br
+      p.
+        You can also update or delete items and categories for upto 12 hours
+        after creation. Unless you know the secret password...

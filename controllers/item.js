@@ -65,7 +65,10 @@ export const create_post = [
 ];
 
 export const list = asyncHandler(async function (req, res) {
-  const items = await Item.find({}).sort({ category: 1 }).exec();
+  const items = await Item.find({})
+    .sort({ category: 1 })
+    .populate("category")
+    .exec();
   res.render("item_list", { items });
 });
 

@@ -3,10 +3,17 @@ extends layout
 block title
   ="All items"
 block content
-  h1 All items
-  ul
-    each item in items
-      li
-        a(href=item.url) 
-          h2= item.name
-        p= item.description
+  div.flex.flex-col.items-center.m-6
+    h2.text-xl All items
+    ul.m-6.text-xl.flex.flex-col.gap-6
+      each item in items
+        li.rounded.p-6.shadow-lg.bg-gray-400
+          a(href=item.url) 
+            h3.text-3xl= item.name
+          p= item.category.name
+          p ₹ 
+            span.font-medium.text-2xl #{item.price}
+          p
+            span.font-medium.text-2xl #{item.number_in_stock} 
+            .
+              in stock

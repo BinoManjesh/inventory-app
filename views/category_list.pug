@@ -3,10 +3,11 @@ extends layout
 block title
   ="All categories"
 block content
-  h1 All categories
-  ul
-    each category in categories
-      li
-        a(href=category.url) 
-          h2= category.name
-        p= category.description
+  div.flex.flex-col.items-center.m-6
+    h2.text-xl All categories
+    ul.m-6.text-xl.flex.flex-col.gap-6
+      each category in categories
+        li.rounded.p-6.shadow-lg.bg-gray-400
+          a(href=category.url) 
+            h3.text-3xl= category.name
+          p= category.description

@@ -5,7 +5,7 @@ import { toHeadingCase } from "../utils/sanitizers.js";
 
 export const create_get = asyncHandler(async (req, res) => {
   const categories = await Category.find().exec();
-  res.render("item_form", { title: "Create Item", categories });
+  res.render("item_form", { title: "New Item", categories });
 });
 
 function getFormValidator() {
@@ -52,7 +52,7 @@ export const create_post = [
     if (!results.isEmpty()) {
       const categories = await Category.find().exec();
       res.render("item_form", {
-        title: "Create Item",
+        title: "New Item",
         item,
         categories,
         errors: results.array(),
@@ -83,7 +83,7 @@ export const update_get = asyncHandler(async (req, res) => {
     Category.find().exec(),
   ]);
   res.render("item_form", {
-    title: `Update Item ${item.name}`,
+    title: "Update Item",
     item,
     categories,
   });
@@ -115,7 +115,7 @@ export const update_post = [
     if (!results.isEmpty()) {
       const categories = await Category.find().exec();
       res.render("item_form", {
-        title: `Update Item ${item.name}`,
+        title: "Update Item",
         item,
         categories,
         errors: results.array(),

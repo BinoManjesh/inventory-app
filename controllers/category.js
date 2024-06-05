@@ -4,7 +4,7 @@ import { body, validationResult } from "express-validator";
 import { toHeadingCase } from "../utils/sanitizers.js";
 
 export function create_get(req, res) {
-  res.render("category_form", { title: "Create new category" });
+  res.render("category_form", { title: "New Category" });
 }
 
 function getFormValidator() {
@@ -35,7 +35,7 @@ export const create_post = [
     });
     if (!results.isEmpty()) {
       res.render("category_form", {
-        title: "Create new category",
+        title: "New Category",
         errors: results.array(),
         category,
       });
@@ -62,7 +62,7 @@ export const detail = asyncHandler(async function (req, res) {
 export const update_get = asyncHandler(async (req, res) => {
   const category = await Category.findById(req.params.id).exec();
   res.render("category_form", {
-    title: `Update Category ${category.name}`,
+    title: "Update Category",
     category,
   });
 });
@@ -80,7 +80,7 @@ export const update_post = [
     const results = validationResult(req);
     if (!results.isEmpty()) {
       res.render("category_form", {
-        title: `Update Category ${category.name}`,
+        title: "Update Category",
         category,
         errors: results.array(),
       });

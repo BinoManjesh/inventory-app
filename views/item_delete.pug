@@ -3,16 +3,23 @@ extends layout
 block title
   ="Delete Item: " + item.name
 block content
-  h1 Delete Item: #{item.name}
-  p #[strong Category:] #{item.category.name}
-  p= item.description
-  p #[strong Price:] ₹ #{item.price} 
-  p #[strong Category:] #{item.number_in_stock}
-  form(method="post")
-    if item.hoursSinceCreate >= 12
-      p Since this item has been created more than 12 hours before, enter the secret password to delete it.
-      label(for="password") Enter Secret Password
-      input(id="password" name="password" type="password")
-    button Confirm delete
-  if error
-    p Wrong password!
+  div.flex.flex-col.items-center.m-6.gap-6
+    div.flex.flex-col.items-center.gap-3.bg-gray-400.p-6.rounded-lg.shadow
+      h2.text-3xl= item.name
+      p= item.category.name
+      p.self-center ₹ 
+        span.font-medium.text-2xl #{item.price}
+      p.self-center
+        span.font-medium.text-2xl #{item.number_in_stock} 
+        .
+          in stock
+      p #{item.description}
+    form(method="post").flex.flex-col.gap-6.items-center.items-center.w-96
+      if item.hoursSinceCreate >= 12
+        .flex.flex-col.gap-3.bg-gray-400.p-6.rounded-lg.shadow
+          p Since this item has been created more than 12 hours before, enter the secret password to delete it.
+          label(for="password") Enter Secret Password
+          input(id="password" name="password" type="password")
+      if error
+        p.text-red-600 Wrong password!
+      button.rounded.self-center.px-3.py-1.shadow-lg.bg-red-500 Confirm delete

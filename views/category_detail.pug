@@ -6,12 +6,10 @@ block content
   .flex.flex-col.items-center.m-6.text-xl.gap-6 
     h2.text-2xl.underline= "Category: " + category.name
     p= category.description
-    .flex.gap-6.mb-12
+    .flex.gap-6.mb-6
       a(href=`${category.url}/update`).rounded.px-3.py-1.shadow-lg.bg-gray-400 Update
       a(href=`${category.url}/delete`).rounded.px-3.py-1.shadow-lg.bg-gray-400 Delete
     if items.length
-        h3.text-xl Items in 
-          span.underline #{category.name}
         ul.flex.flex-col.gap-6
           each item in items
             li.rounded.p-6.shadow-lg.bg-gray-400

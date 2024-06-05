@@ -3,35 +3,38 @@ extends layout
 block title
   = title
 
-block content 
-  form(method="post")
-    label(for="name") Name
-    input(type="text", id="name", name="name" value=item && item.name)
-
-    label(for="description") Description
-    input(type="text", id="description", name="description" value=item && item.description)
-
-    label(for="category") Category
-    select(name="category" id="category")
-      each category of categories
-        option(value=category.id, selected=item && (item.category.toString() === category.id))= category.name
-
-    label(for="price") Price
-    input(type="number", id="price", name="price", min=0, value=item && item.price)
-
-    label(for="number_in_stock") Number in stock
-    input(type="number", id="number_in_stock", name="number_in_stock", min=0, value=item && item.number_in_stock)
-
-    if item && item.hoursSinceCreate && item.hoursSinceCreate >= 12
-      p Since this item has been created more than 12 hours before, enter the secret password to update it.
-      label(for="password") Enter Secret Password
-      input(id="password" name="password" type="password")
-
-    button Submit
-  if errors
-    div.errors
-      ul
-        each error of errors
-          li= error.msg
+block content
+  div.flex.flex-col.items-center.m-6.text-xl
+    h2.mb-6= title
+    form(method="post").flex.flex-col.gap-6.items-center.items-center.w-96
+      .flex.flex-col.gap-6.bg-gray-400.p-6.rounded-lg.shadow
+        div.flex.flex-col.gap-2
+          label(for="name") Name
+          input(type="text", id="name", name="name" value=item && item.name)
+        div.flex.flex-col.gap-2
+          label(for="description") Description
+          textarea(id="description", name="description")= item && item.description
+        div.flex.flex-col.gap-2
+          label(for="category") Category
+          select(name="category" id="category")
+            each category of categories
+              option(value=category.id, selected=item && (item.category.toString() === category.id))= category.name
+        div.flex.flex-col.gap-2
+          label(for="price") Price
+          input(type="number", id="price", name="price", min=0, value=item && item.price)
+        div.flex.flex-col.gap-2
+          label(for="number_in_stock") Number in stock
+          input(type="number", id="number_in_stock", name="number_in_stock", min=0, value=item && item.number_in_stock)
+        if item && item.createdAt && item.hoursSinceCreate >= 12
+          div.flex.flex-col.gap-2
+            p Since this item has been created more than 12 hours before, enter the secret password to update it.
+            label(for="password").font-medium Enter Secret Password
+            input(id="password" name="password" type="password")
+      if errors
+        ul.space-y-3.px-6
+          each error of errors
+            li.text-red-600= error.msg
+      button.rounded.self-center.px-3.py-1.shadow-lg.bg-gray-400 Submit
+    
 
 

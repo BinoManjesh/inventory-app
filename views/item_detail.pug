@@ -3,8 +3,8 @@ extends layout
 block title
   ="Item: " + item.name
 block content
-  div.flex.flex-col.items-center.m-6
-    div.flex.flex-col.items-center.gap-3
+  div.flex.flex-col.items-center.m-6.gap-6
+    div.flex.flex-col.items-center.gap-3.bg-gray-400.p-6.rounded-lg.shadow
       h2.text-3xl= item.name
       p= item.category.name
       p.self-center ₹ 
@@ -14,6 +14,6 @@ block content
         .
           in stock
       p #{item.description}
-      .flex.gap-6
-        a(href=`${item.url}/update`).rounded.px-3.py-1.shadow-lg.bg-gray-400 Update
-        a(href=`${item.url}/delete`).rounded.px-3.py-1.shadow-lg.bg-gray-400 Delete
+    .flex.gap-6
+      a(href=`${item.url}/update`).rounded.px-3.py-1.shadow-lg.bg-gray-400 Update
+      a(href=`${item.url}/delete`).rounded.px-3.py-1.shadow-lg.bg-gray-400 Delete

@@ -3,17 +3,25 @@ extends layout
 block title
   ="Category: " + category.name
 block content
-  h1= "Category: " + category.name
-  a(href=`${category.url}/update`) Update category
-  p= category.description
-  if items.length 
-    h2 Items:
-    ul
-      each item in items
-        li
-          a(href=item.url) 
-            h2= item.name
-          p= item.description
-  else
-    p There are no items of this category
-  a(href=`${category.url}/delete`) Delete category
+  .flex.flex-col.items-center.m-6.text-xl.gap-6 
+    h2.text-2xl.underline= "Category: " + category.name
+    p= category.description
+    .flex.gap-6.mb-12
+      a(href=`${category.url}/update`).rounded.px-3.py-1.shadow-lg.bg-gray-400 Update
+      a(href=`${category.url}/delete`).rounded.px-3.py-1.shadow-lg.bg-gray-400 Delete
+    if items.length
+        h3.text-xl Items in 
+          span.underline #{category.name}
+        ul.flex.flex-col.gap-6
+          each item in items
+            li.rounded.p-6.shadow-lg.bg-gray-400
+              a(href=item.url) 
+                h3.text-3xl= item.name
+              p ₹ 
+                span.font-medium.text-2xl #{item.price}
+              p
+                span.font-medium.text-2xl #{item.number_in_stock} 
+                .
+                  in stock
+    else
+      p There are no items of this category
